@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="task-container">
+    <h1>My Tasks</h1>
+    
+    <form action="{{ url_for('main.add_task') }}" method="POST" class="task-form">
+        <input type="text" name="title" placeholder="Enter task..." required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <div class="tasks-list">
+        {% for task in tasks %}
+        <div class="task-item {% if task.completed %}completed{% endif %}">
+            <span onclick="window.location.href='{{ url_for('main.toggle_task', task_id=task.id) }}'">
+                {{ task.title }}
+            </span>
+            <a href="{{ url_for('main.delete_task', task_id=task.id) }}" class="delete-btn">Delete</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 
